@@ -1,5 +1,6 @@
 
-
+## Docker 
+"docker-compose up" start in docker 
 
 ## api
 
