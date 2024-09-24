@@ -1,5 +1,5 @@
-FROM openjdk:8-jdk-alpine
+FROM amazoncorretto:17
 MAINTAINER wherby
 ARG JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} demo-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","./demo-0.0.1-SNAPSHOT.jar"]
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
