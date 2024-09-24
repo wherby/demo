@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table(name = "incidents")
 public class Incident {
     @Id
     @SequenceGenerator(
@@ -22,12 +22,22 @@ public class Incident {
     private LocalDate createTime;
     private LocalDate updateTime;
     private String reportName;
-    private String fixName;
+    private String updateBy;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private String status;
 
     public Incident() {
     }
 
-    public Incident(Long id, String type, String description, Integer priority, LocalDate createTime, LocalDate updateTime, String reportName, String fixName) {
+    public Incident(Long id, String type, String description, Integer priority, LocalDate createTime, LocalDate updateTime, String reportName, String updateBy, String status) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -35,17 +45,19 @@ public class Incident {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.reportName = reportName;
-        this.fixName = fixName;
+        this.updateBy = updateBy;
+        this.status = status;
     }
 
-    public Incident(String type, String description, Integer priority, LocalDate createTime, LocalDate updateTime, String reportName, String fixName) {
+    public Incident(String type, String description, Integer priority, LocalDate createTime, LocalDate updateTime, String reportName, String updateBy, String status) {
         this.type = type;
         this.description = description;
         this.priority = priority;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.reportName = reportName;
-        this.fixName = fixName;
+        this.updateBy = updateBy;
+        this.status = status;
     }
 
     public Long getId() {
@@ -104,12 +116,12 @@ public class Incident {
         this.reportName = reportName;
     }
 
-    public String getFixName() {
-        return fixName;
+    public String getUpdateBy() {
+        return updateBy;
     }
 
-    public void setFixName(String fixName) {
-        this.fixName = fixName;
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 
     @Override
@@ -122,7 +134,8 @@ public class Incident {
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", reportName='" + reportName + '\'' +
-                ", fixName='" + fixName + '\'' +
+                ", updateBy='" + updateBy + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
