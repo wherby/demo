@@ -1,6 +1,8 @@
 package com.example.demo.incident;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +21,10 @@ public class IncidentService {
 
     public List<Incident> getIncident(){
         return incidentRepository.findAll();
+    }
 
+    public Page<Incident> getPageIncident(Pageable pageable){
+        return incidentRepository.findAll(pageable);
     }
 
     public void addIncident(Incident incident) {

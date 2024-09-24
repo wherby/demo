@@ -1,6 +1,9 @@
 package com.example.demo.incident;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +22,11 @@ public class IncidentController {
     @GetMapping()
     public List<Incident> getIncident(){
         return incidentService.getIncident();
+    }
+
+    @GetMapping("/{pageNo}/{recordCount}")
+    public Page<Incident> getPagedIncident(@PathVariable int pageNo, @PathVariable int recordCount){
+        return  incidentService.getPageIncident(PageRequest.of(pageNo,recordCount));
     }
 
     @PostMapping()
