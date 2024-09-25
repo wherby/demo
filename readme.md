@@ -1,9 +1,11 @@
 
 ## start by Mvnw
+which will start in docker container, make sure docker installed.
 ./mvnw spring-boot:run
 visit http://localhost:8090/
 
 ## start by Java 
+mvn package 
 java -jar target/demo-0.0.1-SNAPSHOT.jar
 visit  http://localhost:8080/
 
