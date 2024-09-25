@@ -17,13 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class DemoApplicationTests {
+class IncidentFunctionTests {
 
 	@Autowired
 	private MockMvc mockMvc;
-	@Test
-	void contextLoads() {
-	}
 
 
 	String incidentStr = "{\"type\":\"Client\",\"description\":\"Client can't access web\",\"priority\":1,\"reportName\":\"Alice\"}";
