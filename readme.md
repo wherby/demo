@@ -1,10 +1,18 @@
 
-## Docker 
-"docker-compose up" start in docker 
+## start by Mvnw
+./mvnw spring-boot:run
+visit http://localhost:8090/ http://localhost:8080/
+
+## start by Java 
+java -jar target/demo-0.0.1-SNAPSHOT.jar
+
 
 ## api
 
 http://localhost:8080/api/v1/incident/
+
+## GET
+GET http://localhost:8080/api/v1/incident/0/3
 
 
 ## POST
@@ -20,6 +28,16 @@ POST http://localhost:8080/api/v1/incident/
 
 
 {"timestamp":"2024-09-24T08:34:00.350+00:00","status":500,"error":"Internal Server Error","message":"Id should be set by db","path":"/api/v1/incident/"}
+
+## Put
+PUT http://localhost:8080/api/v1/incident/1
+{
+"type": "Client2",
+"description": "Client can't access web",
+"priority": 1,
+"fixName": "Bob"
+}
+
 ## DELET
 
 DELETE http://localhost:8080/api/v1/incident/{incidentId}
