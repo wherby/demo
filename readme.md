@@ -1,10 +1,11 @@
 
 ## start by Mvnw
 ./mvnw spring-boot:run
-visit http://localhost:8090/ http://localhost:8080/
+visit http://localhost:8090/
 
 ## start by Java 
 java -jar target/demo-0.0.1-SNAPSHOT.jar
+visit  http://localhost:8080/
 
 
 ## api

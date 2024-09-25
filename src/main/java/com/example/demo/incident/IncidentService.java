@@ -33,18 +33,18 @@ public class IncidentService {
     @Cacheable(value = "incidents",key = "{#pageNo,#recordCount}")
     public Page<Incident> getPageIncident( int pageNo,  int recordCount){
         Pageable pageable = PageRequest.of(pageNo,recordCount);
-        System.out.println("Get page from db ");
+        //System.out.println("Get page from db ");
         return incidentRepository.findAll(pageable);
     }
 
     @CacheEvict(value = "incidents",allEntries = true)
-    public void addIncident(Incident incident) {
+    public Incident addIncident(Incident incident) {
         incident.setCreateTime(LocalDate.now());
         incident.setStatus("Created");
         if( incident.getId()!=null){
             throw new IllegalStateException("Id should be set by db");
         }
-        incidentRepository.save(incident);
+        return incidentRepository.save(incident);
     }
 
     @Cacheable(value = "incidents", key="#incidentId")
@@ -52,7 +52,7 @@ public class IncidentService {
         Incident incident= incidentRepository.findById(incidentId).orElseThrow(
                 ()->new ResourceNotExisted(notFoundMsg(incidentId))
         );
-        System.out.println("Get from db " + incidentId);
+        //System.out.println("Get from db " + incidentId);
         return incident;
     }
     @CacheEvict(value = "incidents",allEntries = true)
