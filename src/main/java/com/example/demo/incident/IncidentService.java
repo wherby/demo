@@ -1,9 +1,16 @@
 package com.example.demo.incident;
 
+import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,10 +30,14 @@ public class IncidentService {
         return incidentRepository.findAll();
     }
 
-    public Page<Incident> getPageIncident(Pageable pageable){
+    @Cacheable(value = "incidents",key = "{#pageNo,#recordCount}")
+    public Page<Incident> getPageIncident( int pageNo,  int recordCount){
+        Pageable pageable = PageRequest.of(pageNo,recordCount);
+        System.out.println("Get page from db ");
         return incidentRepository.findAll(pageable);
     }
 
+    @CacheEvict(value = "incidents",allEntries = true)
     public void addIncident(Incident incident) {
         incident.setCreateTime(LocalDate.now());
         incident.setStatus("Created");
@@ -36,12 +47,15 @@ public class IncidentService {
         incidentRepository.save(incident);
     }
 
+    @Cacheable(value = "incidents", key="#incidentId")
     public Incident getIncident(Long incidentId){
         Incident incident= incidentRepository.findById(incidentId).orElseThrow(
                 ()->new ResourceNotExisted(notFoundMsg(incidentId))
         );
+        System.out.println("Get from db " + incidentId);
         return incident;
     }
+    @CacheEvict(value = "incidents",allEntries = true)
     public void deleteIncident(Long incidentId) {
         boolean exist= incidentRepository.existsById(incidentId);
         if(!exist){
@@ -54,7 +68,8 @@ public class IncidentService {
         return "Incident with Id " + incidentId + " does not exist";
     }
 
-    public void updateIncident(Long incidentId, Incident updatedIncident){
+    @CacheEvict(value = "incidents",allEntries = true)
+    public Incident updateIncident(Long incidentId, Incident updatedIncident){
         Incident incident = incidentRepository.findById(incidentId).orElseThrow(
                 ()-> new ResourceNotExisted(notFoundMsg(incidentId))
         );
@@ -65,5 +80,6 @@ public class IncidentService {
         incident.setUpdateTime(LocalDate.now());
         incident.setStatus(updatedIncident.getStatus());
         incidentRepository.save(incident);
+        return incident;
     }
 }

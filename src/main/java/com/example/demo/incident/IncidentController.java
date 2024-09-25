@@ -26,7 +26,7 @@ public class IncidentController {
 
     @GetMapping("/{pageNo}/{recordCount}")
     public Page<Incident> getPagedIncident(@PathVariable int pageNo, @PathVariable int recordCount){
-        return  incidentService.getPageIncident(PageRequest.of(pageNo,recordCount));
+        return  incidentService.getPageIncident(pageNo,recordCount);
     }
 
     @PostMapping()
@@ -44,8 +44,8 @@ public class IncidentController {
     }
 
     @PutMapping("{incidentId}")
-    public void updateIncident(@PathVariable("incidentId") Long incidentId,
+    public Incident updateIncident(@PathVariable("incidentId") Long incidentId,
                                @RequestBody Incident incident){
-        incidentService.updateIncident(incidentId,incident);
+        return incidentService.updateIncident(incidentId,incident);
     }
 }
